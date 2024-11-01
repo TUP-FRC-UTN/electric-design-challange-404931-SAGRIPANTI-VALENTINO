@@ -1,5 +1,39 @@
-<!-- BUILT IT FROM:
-https://getbootstrap.com/docs/5.3/forms/form-control/#example
-https://getbootstrap.com/docs/5.3/forms/select/#default
-https://getbootstrap.com/docs/5.3/forms/select/#default -->
-<p>anda form</p>
+<div class="container mt-5">
+    <form formGroup="budget" (ngSubmit)="sendForm()">
+        <label class="form-label"> Nombre </label>
+        <input type="text" class="form-control" formControlName="client">
+        <br>
+        <label class="form-label"> Fecha </label>
+        <input type="date" class="form-control" formControlName="date">
+        <br>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" (click)="addModule()"> + Module </button>
+        </div>
+        <br>
+        <!-- LOS MODULOS -->
+        <div formArrayName= "modules">
+
+            @for (m of modules.controls; track $index) {
+
+                <div class="container" [formGroupName]="$index">
+                    <h6> Modulo #{{$index +1}} </h6>
+                    <label class="form-label"> Tipo Modulo </label>
+                    <select formControlName="id">
+                        @for (moduleType of allModuleTypes; track $index) {
+                            <option [value]="moduleType.id"> {{moduleType.name}} </option>
+                        }
+                    </select>
+                </div>
+            
+
+            }
+
+        </div>
+
+        <br>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" routerLink="/list"> Volver </button>
+            <button type="submit" class="btn btn-primary" [disabled]="budget.invalid"> Guardar </button>
+        </div>
+    </form>
+</div>
